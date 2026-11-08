@@ -22,7 +22,7 @@ export default async function GalleryPage() {
             {images.map((image) => (
               <figure key={image.id} className="overflow-hidden rounded-2xl border border-border bg-background/95 shadow-sm backdrop-blur-sm">
                 <div className="relative aspect-[4/3] bg-muted">
-                  <Image src={image.imageUrl} alt={image.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+                  <Image src={image.imageUrl} alt={image.title} fill className="object-contain p-2" sizes="(max-width: 768px) 100vw, 33vw" />
                 </div>
                 <figcaption className="p-5">
                   <h2 className="font-semibold">{image.title}</h2>

@@ -61,6 +61,7 @@ function LoginContent() {
         return;
       }
 
+      router.refresh();
       await checkAdminAndRedirect();
     } catch (loginError) {
       console.error("Login error:", loginError);
