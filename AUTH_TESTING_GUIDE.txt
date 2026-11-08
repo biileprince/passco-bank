@@ -135,3 +135,19 @@ SEO Optimization:
 
 JSON-LD Schema markup for "Freelance Web Developer"
 Structured data implementation
+
+PRODUCTION ADMIN SEEDING:
+
+The seeded admin account is created in the database, not in Vercel's application
+environment. After adding the production DATABASE_URL to a local .env file, run:
+
+  npx prisma migrate deploy
+  npx prisma db seed
+
+The seed is safe to rerun and repairs the credential account for:
+
+  Phone: 0550000000
+  Password: OguaaAdmin123!
+
+Ensure the DATABASE_URL used by this command is the same Neon/Postgres
+connection string configured in Vercel. Change this password before production use.

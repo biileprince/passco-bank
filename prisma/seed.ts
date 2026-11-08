@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { hashPassword } from "better-auth/crypto";
 import { auth } from "../lib/auth";
 
 const adapter = new PrismaPg({
@@ -110,6 +111,25 @@ async function seedOguaaHallData() {
       phone: adminPhone,
     },
     select: { id: true },
+  });
+
+  const adminPasswordHash = await hashPassword(adminPassword);
+  await prisma.account.upsert({
+    where: {
+      providerId_accountId: {
+        providerId: "credential",
+        accountId: seedAdmin.id,
+      },
+    },
+    update: {
+      password: adminPasswordHash,
+    },
+    create: {
+      userId: seedAdmin.id,
+      providerId: "credential",
+      accountId: seedAdmin.id,
+      password: adminPasswordHash,
+    },
   });
 
   const computerScience = programs.get("Computer Science");
