@@ -14,7 +14,7 @@ import {
   Newspaper,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "@/lib/auth-client";
 
 const links = [
@@ -32,6 +32,13 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   async function handleLogout() {
     await signOut();
     router.push("/");
@@ -43,7 +50,7 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="fixed right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background shadow-sm lg:hidden"
+        className="fixed right-4 top-20 z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background shadow-sm lg:hidden"
         aria-label={isOpen ? "Close student menu" : "Open student menu"}
         aria-expanded={isOpen}
       >
@@ -53,14 +60,14 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
       {isOpen && (
         <button
           type="button"
-          className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-14 z-40 bg-black/30 lg:hidden"
           onClick={() => setIsOpen(false)}
           aria-label="Close student menu"
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-border bg-background transition-transform lg:translate-x-0 ${
+        className={`fixed bottom-0 left-0 top-14 z-50 flex w-72 flex-col border-r border-border bg-background transition-transform lg:inset-y-0 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

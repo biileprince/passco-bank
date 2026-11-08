@@ -235,6 +235,12 @@ async function seedOguaaHallData() {
       category: "sports-socials",
       imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=85",
     },
+    ...Array.from({ length: 16 }, (_, index) => ({
+      title: `Matriculate with Kwame Eugene ${index + 1}`,
+      caption: "Matriculation photo shorts sponsored by Kwame Eugene.",
+      category: "matriculation",
+      imageUrl: `/gallery/matriculation-${String(index + 1).padStart(2, "0")}.jpeg`,
+    })),
   ];
   for (const image of gallery) {
     const existing = await prisma.galleryImage.findFirst({ where: { title: image.title } });

@@ -9,8 +9,9 @@ export default async function GalleryPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background px-4 pb-20 pt-32 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
+    <div className="relative min-h-screen overflow-hidden bg-background px-4 pb-20 pt-32 sm:px-6 lg:px-8">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(252,217,20,0.2),transparent_32%),linear-gradient(120deg,rgba(6,119,0,0.06),transparent_55%)]" />
+      <div className="relative mx-auto max-w-7xl">
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-[rgb(6,119,0)]">Hall life</p>
         <h1 className="mt-4 text-5xl font-bold tracking-tight sm:text-6xl">The Oguaa community.</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">A growing collection of moments from hall events, facilities, sports, and student life.</p>
@@ -19,7 +20,7 @@ export default async function GalleryPage() {
         ) : (
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {images.map((image) => (
-              <figure key={image.id} className="overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
+              <figure key={image.id} className="overflow-hidden rounded-2xl border border-border bg-background/95 shadow-sm backdrop-blur-sm">
                 <div className="relative aspect-[4/3] bg-muted">
                   <Image src={image.imageUrl} alt={image.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
                 </div>
