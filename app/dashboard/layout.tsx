@@ -14,7 +14,7 @@ export default async function StudentDashboardLayout({
 
   const profile = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { name: true, studentId: true },
+    select: { name: true, studentId: true, role: true },
   });
 
   return (
@@ -22,8 +22,9 @@ export default async function StudentDashboardLayout({
       <StudentSidebar
         name={profile?.name || session.user.name || "Student"}
         studentId={profile?.studentId || null}
+        role={profile?.role || "user"}
       />
-      <main className="min-h-screen lg:pl-72">{children}</main>
+      <main className="min-h-screen pt-14 sm:pt-16 lg:pl-72 lg:pt-16">{children}</main>
     </div>
   );
 }

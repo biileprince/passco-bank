@@ -12,6 +12,7 @@ import {
   Menu,
   MessageSquare,
   Newspaper,
+  ShieldCheck,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -27,7 +28,11 @@ const links = [
   { label: "Complaints & suggestions", href: "/contact", icon: MessageSquare },
 ];
 
-export function StudentSidebar({ name, studentId }: { name: string; studentId: string | null }) {
+const adminLinks = [
+  { label: "Admin panel", href: "/admin", icon: ShieldCheck },
+];
+
+export function StudentSidebar({ name, studentId, role }: { name: string; studentId: string | null; role: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +55,7 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="fixed right-4 top-20 z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background shadow-sm lg:hidden"
+        className="fixed right-4 top-[4.5rem] z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background shadow-sm lg:hidden"
         aria-label={isOpen ? "Close student menu" : "Open student menu"}
         aria-expanded={isOpen}
       >
@@ -60,14 +65,14 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
       {isOpen && (
         <button
           type="button"
-          className="fixed inset-x-0 bottom-0 top-14 z-40 bg-black/30 lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-14 z-40 bg-black/45 backdrop-blur-[2px] lg:hidden"
           onClick={() => setIsOpen(false)}
           aria-label="Close student menu"
         />
       )}
 
       <aside
-        className={`fixed bottom-0 left-0 top-14 z-50 flex w-72 flex-col border-r border-border bg-background transition-transform lg:inset-y-0 lg:translate-x-0 ${
+        className={`fixed bottom-0 left-0 top-14 z-50 flex w-72 flex-col border-r border-border bg-background shadow-xl transition-transform lg:top-16 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -102,6 +107,22 @@ export function StudentSidebar({ name, studentId }: { name: string; studentId: s
               </Link>
             );
           })}
+          {role === "admin" && (
+            <div className="mt-4 border-t border-border pt-4">
+              <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Administration</p>
+              {adminLinks.map(({ label, href, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-[rgb(6,119,0)] transition-colors hover:bg-[rgb(255,217,0)]/20"
+                >
+                  <Icon className="h-4 w-4 shrink-0" />
+                  {label}
+                </Link>
+              ))}
+            </div>
+          )}
         </nav>
 
         <div className="border-t border-border p-4">

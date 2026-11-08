@@ -115,7 +115,7 @@ export function AdminSidebar() {
     <>
       {/* Mobile Menu Button - Positioned to not conflict with admin header */}
       <button
-        className="fixed top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background/95 shadow-sm backdrop-blur-xl lg:hidden"
+        className="fixed top-[4.5rem] right-4 z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background/95 shadow-sm backdrop-blur-xl lg:hidden"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle sidebar"
       >
@@ -125,7 +125,7 @@ export function AdminSidebar() {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-14 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
@@ -133,7 +133,7 @@ export function AdminSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 h-screen w-64 transform border-r border-border bg-background/95 backdrop-blur-xl transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-14 bottom-0 left-0 z-50 h-[calc(100vh-3.5rem)] w-64 transform border-r border-border bg-background/95 backdrop-blur-xl transition-transform duration-300 ease-in-out sm:top-16 sm:h-[calc(100vh-4rem)] lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
