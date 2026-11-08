@@ -18,6 +18,7 @@ const links = [
 export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = React.useState(false);
+  const [accountHref, setAccountHref] = React.useState("/login");
   const resourcesRef = React.useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
 
@@ -38,6 +39,34 @@ export function Navigation() {
     document.addEventListener("pointerdown", closeResources);
     return () => document.removeEventListener("pointerdown", closeResources);
   }, []);
+
+  React.useEffect(() => {
+    let active = true;
+
+    if (!session?.user) {
+      setAccountHref("/login");
+      return () => {
+        active = false;
+      };
+    }
+
+    setAccountHref("/dashboard");
+    fetch("/api/auth/check-admin")
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Admin check failed with status ${response.status}`);
+        return (await response.json()) as { isAdmin?: boolean };
+      })
+      .then((data) => {
+        if (active && data.isAdmin) setAccountHref("/admin");
+      })
+      .catch((error) => {
+        console.error("Navigation role check failed:", error);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [session?.user]);
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/50 bg-background/95 text-foreground shadow-sm backdrop-blur-xl">
@@ -76,7 +105,7 @@ export function Navigation() {
               Register
             </Link>
           )}
-          <Link href={session?.user ? "/dashboard" : "/login"}>
+          <Link href={accountHref}>
             <Button className="ml-2 rounded-full bg-[rgb(6,119,0)] px-5 text-white hover:bg-[rgb(6,95,0)]">
               <UserRound className="h-4 w-4" />
               {session?.user ? "My account" : "Student login"}
@@ -112,7 +141,7 @@ export function Navigation() {
                 Register
               </Link>
             )}
-            <Link href={session?.user ? "/dashboard" : "/login"} onClick={() => setIsOpen(false)}>
+            <Link href={accountHref} onClick={() => setIsOpen(false)}>
               <Button className="mt-2 w-full rounded-lg bg-[rgb(6,119,0)] text-white hover:bg-[rgb(6,95,0)]">
                 {session?.user ? "Go to my account" : "Student login"}
               </Button>
