@@ -8,6 +8,7 @@ import { Label } from "@/app/components/ui/label";
 import Link from "next/link";
 import { Eye, EyeOff, Loader2, ArrowLeft, BookOpen } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
+import Image from "next/image";
 
 function LoginContent() {
   const router = useRouter();
@@ -70,12 +71,14 @@ function LoginContent() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-28">
-      <div className="w-full max-w-md">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-28">
+      <Image src="/kwame-eugene.jpeg" alt="" fill className="pointer-events-none object-cover object-top opacity-20" sizes="100vw" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(6,119,0,0.72),rgba(252,217,20,0.22)_55%,rgba(255,255,255,0.78))]" />
+      <div className="relative w-full max-w-md">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Back to home
         </Link>
-        <div className="rounded-2xl border border-border bg-background p-8 shadow-sm">
+        <div className="rounded-2xl border border-border bg-background/95 p-8 shadow-xl backdrop-blur-sm">
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[rgb(255,217,0)]/40 text-[rgb(6,119,0)]">
               <BookOpen className="h-6 w-6" />

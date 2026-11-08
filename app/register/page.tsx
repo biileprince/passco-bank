@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Eye, EyeOff, Loader2, ArrowLeft, BookOpen } from "lucide-react";
 import { signUp } from "@/lib/auth-client";
 import { getStudentAuthEmail } from "@/lib/student-auth";
+import Image from "next/image";
 
 const programs = [
   "B.Ed. Basic Education",
@@ -95,12 +96,14 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-28">
-      <div className="w-full max-w-2xl">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-28">
+      <Image src="/kwame-eugene.jpeg" alt="" fill className="pointer-events-none object-cover object-top opacity-20" sizes="100vw" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(6,119,0,0.72),rgba(252,217,20,0.22)_55%,rgba(255,255,255,0.78))]" />
+      <div className="relative w-full max-w-2xl">
         <Link href="/" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Back to home
         </Link>
-        <div className="rounded-2xl border border-border bg-background p-6 shadow-sm sm:p-8">
+        <div className="rounded-2xl border border-border bg-background/95 p-6 shadow-xl backdrop-blur-sm sm:p-8">
           <div className="mb-8 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[rgb(255,217,0)]/40 text-[rgb(6,119,0)]">
               <BookOpen className="h-6 w-6" />
