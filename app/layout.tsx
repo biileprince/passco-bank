@@ -52,10 +52,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   icons: {
     icon: [
-      { url: "/oguaa-hall-logo.png", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
     ],
-    apple: "/oguaa-hall-logo.png",
+    apple: "/favicon.png",
   },
   applicationName: "Oguaa Hall",
 };
