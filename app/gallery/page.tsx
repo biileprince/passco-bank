@@ -21,8 +21,15 @@ export default async function GalleryPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {images.map((image) => (
               <figure key={image.id} className="overflow-hidden rounded-2xl border border-border bg-background/95 shadow-sm backdrop-blur-sm">
-                <div className="relative aspect-[4/3] bg-muted">
-                  <Image src={image.imageUrl} alt={image.title} fill className="object-contain p-2" sizes="(max-width: 768px) 100vw, 33vw" />
+                <div className="bg-muted p-2">
+                  <Image
+                    src={image.imageUrl}
+                    alt={image.title}
+                    width={image.imageWidth || 1200}
+                    height={image.imageHeight || 800}
+                    className="h-auto w-full object-contain"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
                 <figcaption className="p-5">
                   <h2 className="font-semibold">{image.title}</h2>

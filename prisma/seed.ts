@@ -222,31 +222,40 @@ async function seedOguaaHallData() {
       caption: "Students building a stronger academic community.",
       category: "community",
       imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=85",
+      imageWidth: 1200,
+      imageHeight: 800,
     },
     {
       title: "Community conversations",
       caption: "A moment from student engagement and hall discussions.",
       category: "meetings",
       imageUrl: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=85",
+      imageWidth: 1200,
+      imageHeight: 800,
     },
     {
       title: "Campus life and friendship",
       caption: "Celebrating the people and memories that make hall life special.",
       category: "sports-socials",
       imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=85",
+      imageWidth: 1200,
+      imageHeight: 800,
     },
     ...Array.from({ length: 16 }, (_, index) => ({
       title: `Matriculate with Kwame Eugene ${index + 1}`,
       caption: "Matriculation photo shorts sponsored by Kwame Eugene.",
       category: "matriculation",
       imageUrl: `/gallery/matriculation-${String(index + 1).padStart(2, "0")}.jpeg`,
+      imageWidth: index === 3 ? 1000 : index >= 9 ? 667 : 645,
+      imageHeight: index === 3 ? 645 : 1000,
     })),
   ];
   for (const image of gallery) {
-    const existing = await prisma.galleryImage.findFirst({ where: { title: image.title } });
-    if (!existing) {
-      await prisma.galleryImage.create({ data: { ...image, approved: true } });
-    }
+    await prisma.galleryImage.upsert({
+      where: { id: (await prisma.galleryImage.findFirst({ where: { title: image.title }, select: { id: true } }))?.id || "" },
+      update: { ...image, approved: true },
+      create: { ...image, approved: true },
+    });
   }
 
   console.log("Oguaa Hall catalogue and community content seeded.");
