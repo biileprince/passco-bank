@@ -23,6 +23,25 @@ const getBaseURL = () => {
   return "http://localhost:3000";
 };
 
+const getTrustedOrigins = () => {
+  const origins = new Set([
+    "http://localhost:3000",
+    "https://passco-bank.vercel.app",
+  ]);
+
+  for (const value of [
+    process.env.BETTER_AUTH_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ]) {
+    if (value && !value.startsWith("http://localhost")) {
+      origins.add(value.replace(/\/$/, ""));
+    }
+  }
+
+  return [...origins];
+};
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -42,6 +61,7 @@ export const auth = betterAuth({
   ],
   secret: process.env.BETTER_AUTH_SECRET || "secret-key-change-in-production",
   baseURL: getBaseURL(),
+  trustedOrigins: getTrustedOrigins(),
 });
 
 export type Session = typeof auth.$Infer.Session;
